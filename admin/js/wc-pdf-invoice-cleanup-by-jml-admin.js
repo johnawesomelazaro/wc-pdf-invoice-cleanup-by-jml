@@ -29,4 +29,21 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	$(document).on('click', '#calculate', function() {
+		
+        $.ajax({
+            url: object.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action',
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+
 })( jQuery );

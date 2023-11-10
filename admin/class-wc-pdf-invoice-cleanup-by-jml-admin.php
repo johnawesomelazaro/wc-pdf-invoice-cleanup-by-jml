@@ -96,7 +96,23 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-pdf-invoice-cleanup-by-jml-admin.js', array( 'jquery' ), $this->version, false );
+		$file_last_modified_date = filemtime( plugin_dir_path( __FILE__ ) . 'js/wc-pdf-invoice-cleanup-by-jml-admin.js' );
+
+		wp_enqueue_script(
+			$this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'js/wc-pdf-invoice-cleanup-by-jml-admin.js',
+			array( 'jquery' ),
+			$file_last_modified_date,
+			false
+		);
+
+		wp_localize_script(
+			$this->plugin_name,
+			'object',
+			array(
+				'ajaxurl' => admin_url('admin-ajax.php')
+			)
+		) ;
 
 	}
 
@@ -129,7 +145,7 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 		<div class="wrap">
 			<h1>WooCommerce PDF Invoice Cleanup</h2>
 			<p class="main-instruction">To calculate the space used by PDF invoice files and data, click the 'Calculate' button below.</p>
-			<button class="button button-primary" >Calculate</button>
+			<button class="button button-primary" id="calculate">Calculate</button>
 		</div>
 		<?php
 
