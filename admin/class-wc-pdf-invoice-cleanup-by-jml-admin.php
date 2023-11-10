@@ -125,11 +125,13 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 	 */
 	public function wc_pdf_invoice_cleanup_admin_page() {
 
-		echo '
+		?>
 		<div class="wrap">
 			<h1>WooCommerce PDF Invoice Cleanup</h2>
+			<p class="main-instruction">To calculate the space used by PDF invoice files and data, click the 'Calculate' button below.</p>
+			<button class="button button-primary" >Calculate</button>
 		</div>
-		';
+		<?php
 
 	}
 
