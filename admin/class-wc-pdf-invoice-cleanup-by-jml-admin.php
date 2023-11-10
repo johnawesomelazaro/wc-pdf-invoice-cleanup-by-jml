@@ -100,4 +100,37 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 
 	}
 
+	/**
+	 * Create new sub-menu under `Tools` menu
+	 *
+	 * @since    1.0.0
+	 */
+	public function admin_menu() {
+
+		add_submenu_page(
+			'tools.php',
+			'WooCommerce PDF Invoice Cleanup',
+			'WooCommerce PDF Invoice Cleanup',
+			'manage_options',
+			'wc-pdf-invoice-cleanup',
+			array( $this, 'wc_pdf_invoice_cleanup_admin_page' )
+		);
+
+	}
+
+	/**
+	 * New sub-menu `WooCommerce PDF Invoice Cleanup` content
+	 *
+	 * @since    1.0.0
+	 */
+	public function wc_pdf_invoice_cleanup_admin_page() {
+
+		echo '
+		<div class="wrap">
+			<h1>WooCommerce PDF Invoice Cleanup</h2>
+		</div>
+		';
+
+	}
+
 }
