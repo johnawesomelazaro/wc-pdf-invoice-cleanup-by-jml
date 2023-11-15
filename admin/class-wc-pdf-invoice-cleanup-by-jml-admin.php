@@ -188,17 +188,28 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
             $size_query = "SELECT SUM(LENGTH(meta_value) + LENGTH(meta_key)) AS meta_size FROM {$wpdb->prefix}postmeta WHERE meta_key = %s";
             $meta_size = $wpdb->get_var($wpdb->prepare($size_query, $meta_key));
 
-            // If records found then
-            // add to `$total_db_size`
+            // If records found
+            // Then add to `$total_db_size`
             if( $meta_size ) {
                 $total_db_size += $meta_size;
             }
         }
 
+        $directory_path = ABSPATH . 'wp-content/uploads/woocommerce_pdf_invoice';
+
+        // Use glob to get an array of file paths in the directory
+        $files = glob($directory_path . '/*');
+
+        // Use array_map to apply filesize to each file
+        // And get an array of sizes
+        // Then calculate sum
+        $total_file_size = array_sum( array_map('filesize', $files) );
+
         // Return
         echo json_encode(
             array(
                 'total_db_size' => size_format($total_db_size),
+                'total_file_size' => size_format($total_file_size)
             )
         );
 
