@@ -158,7 +158,49 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 	 */
     function wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action() {
 
-        echo json_encode(array());
+        global $wpdb;
+
+        // WooCommerce PDF invoice post meta keys
+        $meta_keys = array(
+            '_wc_pdf_invoice_created_date',
+            '_invoice_created_mysql',
+            '_wc_pdf_invoice_number',
+            '_invoice_number',
+            '_invoice_created',
+            '_invoice_date',
+            '_invoice_number_display',
+            '_pdf_company_name',
+            '_pdf_company_details',
+            '_pdf_registered_name',
+            '_pdf_registered_address',
+            '_pdf_company_number',
+            '_pdf_tax_number',
+            '_pdf_logo_file',
+            '_invoice_meta',
+        );
+
+        $total_db_size = 0;
+
+        // Iterate on each meta keys
+        foreach( $meta_keys as $meta_key ) {
+
+            // DB query to get the size of characters
+            $size_query = "SELECT SUM(LENGTH(meta_value) + LENGTH(meta_key)) AS meta_size FROM {$wpdb->prefix}postmeta WHERE meta_key = %s";
+            $meta_size = $wpdb->get_var($wpdb->prepare($size_query, $meta_key));
+
+            // If records found then
+            // add to `$total_db_size`
+            if( $meta_size ) {
+                $total_db_size += $meta_size;
+            }
+        }
+
+        // Return
+        echo json_encode(
+            array(
+                'total_db_size' => size_format($total_db_size),
+            )
+        );
 
         wp_die();
 
