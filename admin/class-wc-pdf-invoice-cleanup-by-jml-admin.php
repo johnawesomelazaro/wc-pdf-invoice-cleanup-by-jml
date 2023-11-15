@@ -73,7 +73,15 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc-pdf-invoice-cleanup-by-jml-admin.css', array(), $this->version, 'all' );
+        $file_last_modified_date = filemtime( plugin_dir_path( __FILE__ ) . 'css/wc-pdf-invoice-cleanup-by-jml-admin.css' );
+
+		wp_enqueue_style(
+            $this->plugin_name,
+            plugin_dir_url( __FILE__ ) . 'css/wc-pdf-invoice-cleanup-by-jml-admin.css',
+            array(),
+            $file_last_modified_date,
+            'all'
+        );
 
 	}
 
