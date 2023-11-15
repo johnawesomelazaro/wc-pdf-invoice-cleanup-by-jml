@@ -151,4 +151,17 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 
 	}
 
+    /**
+	 * AJAX handler to calculate WooCommerce PDF invoice DB records and file size
+	 *
+	 * @since    1.0.0
+	 */
+    function wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action() {
+
+        echo json_encode(array());
+
+        wp_die();
+
+    }
+
 }

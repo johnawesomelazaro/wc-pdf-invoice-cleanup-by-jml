@@ -35,7 +35,7 @@
             url: object.ajaxurl,
             type: 'POST',
             data: {
-                action: 'calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action',
+                action: 'wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action',
             },
             success: function(response) {
                 console.log(response);
@@ -44,6 +44,7 @@
                 console.error(error);
             }
         });
+
     });
 
 })( jQuery );

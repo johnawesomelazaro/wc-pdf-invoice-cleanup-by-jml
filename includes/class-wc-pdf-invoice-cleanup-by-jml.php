@@ -158,6 +158,9 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
 
+		$this->loader->add_action( 'wp_ajax_wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
+        $this->loader->add_action( 'wp_ajax_nopriv_wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
+
 	}
 
 	/**
