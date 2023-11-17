@@ -168,7 +168,7 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 
         global $wpdb;
 
-        // WooCommerce PDF invoice post meta keys
+        // WooCommerce PDF invoice post meta keys to calculate
         $meta_keys = array(
             '_wc_pdf_invoice_created_date',
             '_invoice_created_mysql',
@@ -240,6 +240,47 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-    function wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action() { }
+    function wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action() {
+
+        // WooCommerce PDF invoice post meta keys to delete
+        $meta_keys = array(
+            '_wc_pdf_invoice_created_date',
+            '_invoice_created_mysql',
+            '_wc_pdf_invoice_number',
+            '_invoice_number',
+            '_invoice_created',
+            '_invoice_date',
+            '_invoice_number_display',
+            '_pdf_company_name',
+            '_pdf_company_details',
+            '_pdf_registered_name',
+            '_pdf_registered_address',
+            '_pdf_company_number',
+            '_pdf_tax_number',
+            '_pdf_logo_file',
+            '_invoice_meta'
+        );
+
+        // Convert meta keys to a comma-separated string for the SQL query
+        $meta_keys_string = "'" . implode("','", $meta_keys) . "'";
+
+        // Run delete query matching the post meta keys defined in `$meta_keys`
+        global $wpdb;
+        $query = $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM $wpdb->postmeta WHERE meta_key IN ($meta_keys_string)"
+            )
+        );
+
+        // Return
+        echo json_encode(
+            array(
+               'success' => ( $query !== false ? true : false ) 
+            )
+        );
+
+        wp_die();
+
+    }
 
 }
