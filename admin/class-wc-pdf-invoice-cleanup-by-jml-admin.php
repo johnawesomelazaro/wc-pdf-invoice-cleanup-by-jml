@@ -211,13 +211,23 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
         // Use array_map to apply filesize to each file
         // And get an array of sizes
         // Then calculate sum
-        $total_file_size = array_sum( array_map('filesize', $files) );
+        $total_file_size = array_sum( array_map( 'filesize', $files ) );
+
+        $html = '
+            <p>
+                <b>Total File Size:</b> ' . size_format($total_db_size) . '<br>
+                <b>Database Size:</b>  ' . size_format($total_file_size) . '
+            </p>
+            <p>Please do not navigate away or perform other actions while cleanup is in progress. Wait for completion to avoid potential issues.</p>
+            <button class="button button-primary" id="cleanup-data">Cleanup Data</button>
+        ';
 
         // Return
         echo json_encode(
             array(
                 'total_db_size' => size_format($total_db_size),
-                'total_file_size' => size_format($total_file_size)
+                'total_file_size' => size_format($total_file_size),
+                'calculate_html' => $html
             )
         );
 

@@ -47,10 +47,7 @@
                     // If not, create a new element with id "qwer" after the element with id "calculate"
                     $('<div>')
                     .attr('id', 'calculate-results')
-                    .html(`
-                        <b>Total File Size:</b> ` + response.total_file_size + `<br>
-                        <b>Database Size:</b> ` + response.total_db_size + `
-                    `)
+                    .html(response.calculate_html)
                     .insertAfter('#calculate');
                 }
                 
