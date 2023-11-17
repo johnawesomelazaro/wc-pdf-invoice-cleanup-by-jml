@@ -66,6 +66,15 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
         '_invoice_meta'
     );
 
+    /**
+	 * WooCommerce PDF invoice uploads directory
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
+	 */
+    private $wc_pdf_invoice_uploads_directory_path = ABSPATH . 'wp-content/uploads/woocommerce_pdf_invoice';
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -210,10 +219,10 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
             }
         }
 
-        $directory_path = ABSPATH . 'wp-content/uploads/woocommerce_pdf_invoice';
+        
 
         // Use glob to get an array of file paths in the directory
-        $files = glob($directory_path . '/*');
+        $files = glob( $this->wc_pdf_invoice_uploads_directory_path . '/*' );
 
         // Use array_map to apply filesize to each file
         // And get an array of sizes
@@ -260,7 +269,7 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
             )
         );
 
-        $directory_path = ABSPATH . 'wp-content/uploads/woocommerce_pdf_invoice';
+        $directory_path = $this->wc_pdf_invoice_uploads_directory_path;
 
         $file_delete = false;
 
