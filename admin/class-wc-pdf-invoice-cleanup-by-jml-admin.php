@@ -266,16 +266,42 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 
         // Run delete query matching the post meta keys defined in `$meta_keys`
         global $wpdb;
-        $query = $wpdb->query(
+        $db_delete_query = $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM $wpdb->postmeta WHERE meta_key IN ($meta_keys_string)"
             )
         );
 
+        $directory_path = ABSPATH . 'wp-content/uploads/woocommerce_pdf_invoice';
+
+        $file_delete = false;
+
+        // Ensure the directory path is valid and exists
+        if( is_dir( $directory_path ) ) {
+
+            // Get all PDF files in the directory
+            $pdf_files = glob($directory_path . '/*.pdf');
+
+            // Loop through each PDF file and delete it
+            foreach( $pdf_files as $pdf_file ) {
+                if( is_file( $pdf_file ) ) {
+                    unlink( $pdf_file );
+                }
+            }
+
+            $file_delete = true;
+
+        }
+
         // Return
         echo json_encode(
             array(
-               'success' => ( $query !== false ? true : false ) 
+               'success' => (
+                    $db_delete_query !== false &&
+                    $file_delete
+                    ? true
+                    : false
+                ) 
             )
         );
 
