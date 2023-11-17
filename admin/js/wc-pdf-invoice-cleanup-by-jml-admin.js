@@ -42,14 +42,33 @@
 
                 console.log(response);
 
-                // Check if the element with id "qwer" already exists
                 if( $('#calculate-results').length === 0 ) {
-                    // If not, create a new element with id "qwer" after the element with id "calculate"
                     $('<div>')
                     .attr('id', 'calculate-results')
                     .html(response.calculate_html)
                     .insertAfter('#calculate');
                 }
+                
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+
+    });
+
+    $(document).on('click', '#cleanup-data', function() {
+		
+        $.ajax({
+            url: object.ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action',
+            },
+            success: function(response) {
+
+                console.log(response);
                 
             },
             error: function(error) {

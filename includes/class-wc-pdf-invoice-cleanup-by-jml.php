@@ -161,6 +161,9 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml {
 		$this->loader->add_action( 'wp_ajax_wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
         $this->loader->add_action( 'wp_ajax_nopriv_wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_calculate_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
 
+		$this->loader->add_action( 'wp_ajax_wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
+        $this->loader->add_action( 'wp_ajax_nopriv_wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action', $plugin_admin, 'wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action' );
+
 	}
 
 	/**
