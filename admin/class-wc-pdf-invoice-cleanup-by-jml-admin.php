@@ -40,6 +40,32 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 	 */
 	private $version;
 
+    
+    /**
+	 * WooCommerce PDF invoice post meta keys to calculate and delete
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
+	 */
+    private $wc_pdf_invoice_meta_keys = array(
+        '_wc_pdf_invoice_created_date',
+        '_invoice_created_mysql',
+        '_wc_pdf_invoice_number',
+        '_invoice_number',
+        '_invoice_created',
+        '_invoice_date',
+        '_invoice_number_display',
+        '_pdf_company_name',
+        '_pdf_company_details',
+        '_pdf_registered_name',
+        '_pdf_registered_address',
+        '_pdf_company_number',
+        '_pdf_tax_number',
+        '_pdf_logo_file',
+        '_invoice_meta'
+    );
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -168,29 +194,10 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 
         global $wpdb;
 
-        // WooCommerce PDF invoice post meta keys to calculate
-        $meta_keys = array(
-            '_wc_pdf_invoice_created_date',
-            '_invoice_created_mysql',
-            '_wc_pdf_invoice_number',
-            '_invoice_number',
-            '_invoice_created',
-            '_invoice_date',
-            '_invoice_number_display',
-            '_pdf_company_name',
-            '_pdf_company_details',
-            '_pdf_registered_name',
-            '_pdf_registered_address',
-            '_pdf_company_number',
-            '_pdf_tax_number',
-            '_pdf_logo_file',
-            '_invoice_meta',
-        );
-
         $total_db_size = 0;
 
         // Iterate on each meta keys
-        foreach( $meta_keys as $meta_key ) {
+        foreach( $this->wc_pdf_invoice_meta_keys as $meta_key ) {
 
             // DB query to get the size of characters
             $size_query = "SELECT SUM(LENGTH(meta_value) + LENGTH(meta_key)) AS meta_size FROM {$wpdb->prefix}postmeta WHERE meta_key = %s";
@@ -242,27 +249,8 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
 	 */
     function wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action() {
 
-        // WooCommerce PDF invoice post meta keys to delete
-        $meta_keys = array(
-            '_wc_pdf_invoice_created_date',
-            '_invoice_created_mysql',
-            '_wc_pdf_invoice_number',
-            '_invoice_number',
-            '_invoice_created',
-            '_invoice_date',
-            '_invoice_number_display',
-            '_pdf_company_name',
-            '_pdf_company_details',
-            '_pdf_registered_name',
-            '_pdf_registered_address',
-            '_pdf_company_number',
-            '_pdf_tax_number',
-            '_pdf_logo_file',
-            '_invoice_meta'
-        );
-
         // Convert meta keys to a comma-separated string for the SQL query
-        $meta_keys_string = "'" . implode("','", $meta_keys) . "'";
+        $meta_keys_string = "'" . implode( "','", $this->wc_pdf_invoice_meta_keys ) . "'";
 
         // Run delete query matching the post meta keys defined in `$meta_keys`
         global $wpdb;
