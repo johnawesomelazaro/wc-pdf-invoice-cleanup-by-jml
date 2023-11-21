@@ -57,8 +57,11 @@
                     }
                 }, 1000);
 
-                
-                
+                setTimeout(function() {
+                    // Reset label of button after completion of calculation
+                    $('#calculate').html('Re-calculate');
+                }, 2000);
+
             },
             error: function(error) {
                 console.error(error);
