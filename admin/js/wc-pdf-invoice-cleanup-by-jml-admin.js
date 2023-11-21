@@ -58,33 +58,38 @@
     });
 
     $(document).on('click', '#cleanup-data', function() {
-            
-        // Change label of button to indicate progress
-        $(this).html('Cleaning up data...');
-        
-        $.ajax({
-            url: object.ajaxurl,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action',
-            },
-            success: function(response) {
 
-                setTimeout(function() {
-                    // Change label of button + css class to indicate completion of cleanup 
-                    $('#cleanup-data')
-                        .html('Cleanup completed')
-                        .addClass('cleanup-completed');
-                    // Add strike effect on calculate results texts
-                    $('#calculate-results p:first-child').css('text-decoration', 'line-through');
-                }, 1000);
-                
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
+        // Continue only if the button has not been clicked
+        if( !$(this).hasClass('cleanup-completed') ) {
+            
+            // Change label of button to indicate progress
+            $(this).html('Cleaning up data...');
+            
+            $.ajax({
+                url: object.ajaxurl,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    action: 'wpicbj_cleanup_wc_pdf_invoice_db_records_and_file_size_ajax_action',
+                },
+                success: function(response) {
+
+                    setTimeout(function() {
+                        // Change label of button + css class to indicate completion of cleanup 
+                        $('#cleanup-data')
+                            .html('Cleanup completed')
+                            .addClass('cleanup-completed');
+                        // Add strike effect on calculate results texts
+                        $('#calculate-results p:first-child').css('text-decoration', 'line-through');
+                    }, 1000);
+                    
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        
+        }
 
     });
 
