@@ -30,6 +30,9 @@
 	 */
 
 	$(document).on('click', '#calculate', function() {
+
+        // Change label of button to indicate progress
+        $(this).html('Calculating data...');
 		
         $.ajax({
             url: object.ajaxurl,
@@ -42,12 +45,19 @@
 
                 console.log(response);
 
-                if( $('#calculate-results').length === 0 ) {
-                    $('<div>')
-                    .attr('id', 'calculate-results')
-                    .html(response.calculate_html)
-                    .insertAfter('#calculate');
-                }
+                setTimeout(function() {
+                    // Change label of button to indicate completion of calculation 
+                    $('#calculate').html('Calculation completed');
+                    // Insert results if it not yet exist
+                    if( $('#calculate-results').length === 0 ) {
+                        $('<div>')
+                            .attr('id', 'calculate-results')
+                            .html(response.calculate_html)
+                            .insertAfter('#calculate');
+                    }
+                }, 1000);
+
+                
                 
             },
             error: function(error) {
