@@ -219,8 +219,6 @@ class Wc_Pdf_Invoice_Cleanup_By_Jml_Admin {
             }
         }
 
-        
-
         // Use glob to get an array of file paths in the directory
         $files = glob( $this->wc_pdf_invoice_uploads_directory_path . '/*' );
 

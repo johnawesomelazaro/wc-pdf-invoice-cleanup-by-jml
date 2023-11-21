@@ -58,7 +58,10 @@
     });
 
     $(document).on('click', '#cleanup-data', function() {
-		
+            
+        // Change label of button to indicate progress
+        $(this).html('Cleaning up data...');
+        
         $.ajax({
             url: object.ajaxurl,
             type: 'POST',
@@ -68,7 +71,14 @@
             },
             success: function(response) {
 
-                console.log(response);
+                setTimeout(function() {
+                    // Change label of button + css class to indicate completion of cleanup 
+                    $('#cleanup-data')
+                        .html('Cleanup completed')
+                        .addClass('cleanup-completed');
+                    // Add strike effect on calculate results texts
+                    $('#calculate-results p:first-child').css('text-decoration', 'line-through');
+                }, 1000);
                 
             },
             error: function(error) {
